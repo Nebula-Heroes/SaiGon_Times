@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.http import HttpResponse
+import requests
 
 # Create your views here.
 def index(request):
@@ -50,3 +51,26 @@ def index(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+# def articles(request, slug):
+#     return render(request, 'article.html', {'slug': slug})
+
+def articles(request, slug):
+    # Replace 'your_api_key' with the actual API key if required
+    api_url = f'http://api.recsysproject.tech/api/get_article?content_id={slug}&api_key=your_api_key'
+
+    try:
+        # Make the API request
+        response = requests.get(api_url)
+        response.raise_for_status()  # Raise an exception for bad responses (4xx and 5xx)
+
+        # Parse the JSON data from the response
+        article_data = response.json()
+
+        # Pass the article data to the template
+        return render(request, 'article.html', {'article_data': article_data})
+
+    except requests.exceptions.RequestException as e:
+        # Handle request exceptions (e.g., connection error, timeout, etc.)
+        error_message = f"Error fetching article data: {e}"
+        return render(request, 'error.html', {'error_message': error_message})
