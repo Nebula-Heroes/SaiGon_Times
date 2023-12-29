@@ -120,10 +120,10 @@ def logout(request):
 def articles(request, article_id):
     return render(request, 'article.html', {'article_id': article_id})
 
-def most_popular(request):
+def most_popular(request, user_id):
     if not request.user.is_authenticated:
         messages.info(request, 'You must log in first.')
-    return render(request, 'mostPopular.html', {})
+    return render(request, 'mostPopular.html', {'user_id': user_id})
 
 def related_articles(request, user_id):
     if not request.user.is_authenticated:
