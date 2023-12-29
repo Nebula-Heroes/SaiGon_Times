@@ -91,7 +91,7 @@ function md5(input) {
 }
 
 // 103.98.150.254:8818
-const api_source = 'http://api.recsysproject.tech';
+const api_source = 'https://api.recsysproject.tech';
 
 // Hàm fetch để lấy thông tin bài viết theo ID
 function getArticle(contentId) {
