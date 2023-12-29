@@ -12,7 +12,7 @@ WORKDIR /app
 COPY requirements.txt /app/
 
 # Cài đặt các dependencies từ file requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Sao chép toàn bộ nội dung của thư mục hiện tại vào thư mục /app/ trên container
 COPY . /app/
