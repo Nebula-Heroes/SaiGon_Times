@@ -21,15 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-6#zo5se5ctz@sxh+z@%d43+n4e65^wa5an7s1m6x0f_*2h4d@6'
-
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
-DEBUG = bool(os.environ.get("DEBUG", default=0))
-
-# 'DJANGO_ALLOWED_HOSTS' should be a single string of hosts with a space between each.
-# For example: 'DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+SECRET_KEY = 'django-insecure-6#zo5se5ctz@sxh+z@%d43+n4e65^wa5an7s1m6x0f_*2h4d@6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,10 +73,10 @@ WSGI_APPLICATION = 'news_recommendation.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'recsys',
-        'USER': 'dangtrinh',
-        'PASSWORD': 'Dangtrinh',
-        'HOST': 'db',
+        'NAME': 'dojistore',
+        'USER': 'postgres',
+        'PASSWORD': '@Trinhdilam9.',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

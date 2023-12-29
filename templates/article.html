@@ -287,7 +287,7 @@ https://templatemo.com/tm-579-cyborg-gaming
             .then(data => {
 
                 // Cập nhật hình ảnh
-                document.getElementById('article-image').src = data.thumbnail ? data.thumbnail : "{% static '/images/test.png' %}";
+                document.getElementById('article-image').src = data.thumbnails ? data.thumbnails : "{% static '/images/test.png' %}";
 
                 // Cập nhật tên tác giả
                 document.getElementById('article-author').innerText = 'Author: ' + data.author;
@@ -376,8 +376,8 @@ https://templatemo.com/tm-579-cyborg-gaming
 
             articleDiv.innerHTML = `
                 <div class="item px-2">
-                    ${userArticle.thumbnail ? `<img src="${userArticle.thumbnail}" alt="">` : `<img src="{% static '/images/test.png' %}" alt="">`}
-                    <h4 style="max-width: 90%;"><a href="/articles/views/${userArticle.contentId}">${userArticle.title}</a><br><span>${userArticle.contentId}</span></h4>
+                    ${userArticle.thumbnails ? `<img src="${userArticle.thumbnails}" alt="" style="height: 300px; width: 100%; object-fit:cover;">` : `<img src="{% static '/images/test.png' %}" alt="" style="height: 300px; width: 100%; object-fit:cover;">`}
+                    <h4 style="max-width: 90%; min-height: 65px;"><a href="/articles/views/${userArticle.contentId}">${userArticle.title}</a><br><span>${userArticle.contentId}</span></h4>
                     <ul>
                         <li class="">
                             <button type="button" class="custom-button" onclick="toggleButtonClick(this); addUserInteraction(userId, 'FOLLOW', '${userArticle?.contentId}', '${generateSessionId()}', 'Mozilla SPAM LINH TINH', 'US', 'USA')">
