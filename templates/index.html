@@ -300,14 +300,13 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         
-        var userId = "{{ user.id }}";
+        var userId = "{{ user.id }}" + hashUsername("{{ user.username }}");
         if (userId != 'undefined') {
             userId = generateSessionId()
         }
 
         getHomepageArticles(userId)
             .then(userArticles => {
-                console.log("🚀 ~ userArticles:", userArticles)
                 // Xử lý dữ liệu ở đây
                 var articlesSection = document.getElementById('articles-section');
                 

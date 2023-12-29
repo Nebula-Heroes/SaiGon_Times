@@ -77,6 +77,19 @@ function generateSessionId() {
   return sessionId;
 }
 
+function hashUsername(username) {
+  const hashedUsername = md5(username);
+  return hashedUsername;
+}
+
+function md5(input) {
+  let hash = "";
+  for (let i = 0; i < input.length; i++) {
+      hash += input.charCodeAt(i).toString(16);
+  }
+  return hash;
+}
+
 // 103.98.150.254:8818
 const api_source = 'http://api.recsysproject.tech';
 
