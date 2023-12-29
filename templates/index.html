@@ -301,7 +301,6 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script>
         
         var userId = "{{ user.id }}";
-        console.log("🚀 ~ user:", userId);
         if (userId != 'undefined') {
             userId = generateSessionId()
         }
@@ -309,7 +308,6 @@ https://templatemo.com/tm-579-cyborg-gaming
         getHomepageArticles(userId)
             .then(userArticles => {
                 // Xử lý dữ liệu ở đây
-                console.log('Data received:', userArticles);
                 var articlesSection = document.getElementById('articles-section');
                 
                 for (var i = 0; i < userArticles.length; i += 2) {

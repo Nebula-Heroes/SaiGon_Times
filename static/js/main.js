@@ -84,7 +84,6 @@ const api_source = 'http://api.recsysproject.tech';
 function getArticle(contentId) {
   const apiUrl = `${api_source}/api/get_article?content_id=${contentId}`;
   
-  console.log("🚀 ~ apiUrl:", apiUrl)
   // Trả về một Promise
   return new Promise((resolve, reject) => {
     fetch(apiUrl)
@@ -95,7 +94,6 @@ function getArticle(contentId) {
         return response.json();
       })
       .then(data => {
-        console.log('Homepage articles:', data);
         // Giải quyết Promise với dữ liệu
         resolve(data);
       })
@@ -107,14 +105,11 @@ function getArticle(contentId) {
   });
 }
   function addUserInteraction(user_id, event_type, content_id, session_id, user_agent, user_region, user_country) {
-    console.log("🚀 ~ content_id:", content_id)
     const apiUrl = `${api_source}/api/interaction?user_id=${user_id}&event_type=${event_type}&content_id=${content_id}&session_id=${session_id}&user_agent=${encodeURIComponent(user_agent)}&user_region=${user_region}&user_country=${user_country}`;
   
-    console.log("🚀 ~ apiUrl:", apiUrl)
     return fetch(apiUrl, { method: 'GET' })
       .then(response => response.json())
       .then(data => {
-        console.log('Interaction added:', data);
         return data;
       })
       .catch(error => {
@@ -126,7 +121,6 @@ function getArticle(contentId) {
   function getHomepageArticles(userId) {
     const apiUrl = `${api_source}/api/recommend_homepage_articles?user_id=${userId}`;
   
-    console.log("🚀 ~ apiUrl:", apiUrl)
     // Trả về một Promise
     return new Promise((resolve, reject) => {
       fetch(apiUrl)
@@ -137,12 +131,10 @@ function getArticle(contentId) {
           return response.json();
         })
         .then(data => {
-          console.log('Homepage articles:', data);
           // Giải quyết Promise với dữ liệu
           resolve(data);
         })
         .catch(error => {
-          console.error('Error fetching homepage articles:', error);
           // Từ chối Promise với lỗi
           reject(error);
         });
@@ -153,7 +145,6 @@ function getArticle(contentId) {
 function getLikedArticles(contentId) {
   const apiUrl = `${api_source}/api/recommend_liked_articles?content_id=${contentId}`;
 
-  console.log("🚀 ~ apiUrl:", apiUrl)
   // Trả về một Promise
   return new Promise((resolve, reject) => {
       fetch(apiUrl)
@@ -164,12 +155,10 @@ function getLikedArticles(contentId) {
               return response.json();
           })
           .then(data => {
-              console.log('Recommended liked articles:', data);
               // Giải quyết Promise với dữ liệu
               resolve(data);
           })
           .catch(error => {
-              console.error('Error fetching recommended liked articles:', error);
               // Từ chối Promise với lỗi
               reject(error);
           });
@@ -180,7 +169,6 @@ function getLikedArticles(contentId) {
 function getFollowedArticles(authorPersonId) {
   const apiUrl = `${api_source}/api/recommend_followed_articles?author_person_id=${authorPersonId}`;
 
-  console.log("🚀 ~ apiUrl:", apiUrl)
   // Trả về một Promise
   return new Promise((resolve, reject) => {
       fetch(apiUrl)
@@ -191,7 +179,6 @@ function getFollowedArticles(authorPersonId) {
               return response.json();
           })
           .then(data => {
-              console.log('Recommended followed articles:', data);
               // Giải quyết Promise với dữ liệu
               resolve(data);
           })
@@ -217,7 +204,6 @@ function getFollowedArticles(authorPersonId) {
                 return response.json();
             })
             .then(data => {
-                console.log('Recommended related articles:', data);
                 // Giải quyết Promise với dữ liệu
                 resolve(data);
             })
@@ -228,18 +214,3 @@ function getFollowedArticles(authorPersonId) {
             });
     });
 }
-
-  // function getRelatedArticles(userId) {
-  //   const apiUrl = `${api_source}/api/recommend_related_articles?user_id=${userId}`;
-  
-  //   fetch(apiUrl)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log('Recommended related articles:', data);
-  //       return data;
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching recommended related articles:', error);
-  //     });
-  // }
-  

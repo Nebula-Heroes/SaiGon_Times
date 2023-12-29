@@ -280,13 +280,11 @@ https://templatemo.com/tm-579-cyborg-gaming
 
         var contentId = "{{ article_id }}".toString();
         var author_person_id = '';
-        console.log("🚀 ~ contentId:", contentId);
 
         addUserInteraction(userId, 'VIEW', parseInt('{{ article_id }}'), generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA');
 
         getArticle(contentId)
             .then(data => {
-                console.log('Data received:', data);
 
                 // Cập nhật hình ảnh
                 document.getElementById('article-image').src = data.thumbnail ? data.thumbnail : "{% static '/images/test.png' %}";
@@ -303,7 +301,6 @@ https://templatemo.com/tm-579-cyborg-gaming
                 // Cập nhật ID tác giả
                 document.getElementById('article-author').innerHTML = 'Author<br><span>' + data.authorPersonId + '</span>';
                 author_person_id = data.authorPersonId;
-                console.log("🚀 ~ author_person_id:", author_person_id)
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -314,7 +311,6 @@ https://templatemo.com/tm-579-cyborg-gaming
                 getLikedArticles(contentId)
                     .then(userArticles => {
                         // Xử lý dữ liệu ở đây
-                        console.log('Data received:', userArticles);
                         var articlesSection = document.getElementById('like-follow-articles-section');
 
                         for (var i = 0; i < userArticles.length; i += 2) {
@@ -345,7 +341,6 @@ https://templatemo.com/tm-579-cyborg-gaming
                 getFollowedArticles(author_person_id)
                     .then(userArticles => {
                         // Xử lý dữ liệu ở đây
-                        console.log('Data received:', userArticles);
                         var articlesSection = document.getElementById('like-follow-articles-section');
 
                         for (var i = 0; i < userArticles.length; i += 2) {
