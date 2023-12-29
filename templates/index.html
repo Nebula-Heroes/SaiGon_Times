@@ -301,7 +301,8 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script>
         
         var userId = "{{ user.id }}" + hashUsername("{{ user.username }}");
-        if (userId != 'undefined') {
+        
+        if (!userId || userId === 'None') {
             userId = generateSessionId()
         }
 
