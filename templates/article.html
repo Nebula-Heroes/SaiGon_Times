@@ -211,13 +211,13 @@ https://templatemo.com/tm-579-cyborg-gaming
                                                 <!-- Button với icon màu trắng -->
                                                 <li class="">
                                                     <button type="button" class="custom-button"
-                                                        onclick="toggleButtonClick(this); addUserInteraction(userId, 'FOLLOW', parseInt('{{ article_id }}'), generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA'); get_like_follow_articles('follow')">
+                                                        onclick="toggleButtonClick(this); addUserInteraction(userId, 'FOLLOW', '{{ article_id }}', generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA'); get_like_follow_articles('follow')">
                                                         <i class="fa-lg fa fa-star m-3 icon-scale"></i>
                                                     </button>
                                                 </li>
                                                 <li class="">
                                                     <button type="button" class="custom-button"
-                                                        onclick="toggleButtonClick(this); addUserInteraction(userId, 'LIKE', parseInt('{{ article_id }}'), generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA'); get_like_follow_articles('like')">
+                                                        onclick="toggleButtonClick(this); addUserInteraction(userId, 'LIKE', '{{ article_id }}', generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA'); get_like_follow_articles('like')">
                                                         <i class="fa-lg fa fa-thumbs-up m-3 icon-scale"></i>
                                                     </button>
                                                 </li>                                                
@@ -255,9 +255,9 @@ https://templatemo.com/tm-579-cyborg-gaming
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright © 2024 <a href="#">Dang Trinh Do</a> Company. All rights reserved.
+                    <p>Copyright © 2024 <a href="#">KHDL HCMUS</a> Company. All rights reserved.
 
-                        <br>Design: <a href="https://github.com/dangtrinhhh" target="_blank" title="ddt">DangTrinhDo</a>
+                        <br>Design: <a href="https://github.com/Nebula-Heroes" target="_blank" title="ddt">Nebula Heroes</a>
                     </p>
                 </div>
             </div>
@@ -274,17 +274,22 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         var userId = "{{ user.id }}";
-        const contentId = "{{ article_id }}".toString();
-        const author_person_id = '';
-        console.log("🚀 ~ author_person_id:", author_person_id)
+        if (userId != 'undefined') {
+            userId = generateSessionId()
+        }
+
+        var contentId = "{{ article_id }}".toString();
+        var author_person_id = '';
         console.log("🚀 ~ contentId:", contentId);
+
+        addUserInteraction(userId, 'VIEW', parseInt('{{ article_id }}'), generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA');
 
         getArticle(contentId)
             .then(data => {
                 console.log('Data received:', data);
 
                 // Cập nhật hình ảnh
-                document.getElementById('article-image').src = data.thumbnails ? data.thumbnails : "{% static '/images/test.png' %}";
+                document.getElementById('article-image').src = data.thumbnail ? data.thumbnail : "{% static '/images/test.png' %}";
 
                 // Cập nhật tên tác giả
                 document.getElementById('article-author').innerText = 'Author: ' + data.author;
@@ -298,6 +303,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                 // Cập nhật ID tác giả
                 document.getElementById('article-author').innerHTML = 'Author<br><span>' + data.authorPersonId + '</span>';
                 author_person_id = data.authorPersonId;
+                console.log("🚀 ~ author_person_id:", author_person_id)
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -375,7 +381,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
             articleDiv.innerHTML = `
                 <div class="item px-2">
-                    <img src="{% static '/images/test.png' %}" alt="">
+                    ${userArticle.thumbnail ? `<img src="${userArticle.thumbnail}" alt="">` : `<img src="{% static '/images/test.png' %}" alt="">`}
                     <h4 style="max-width: 90%;"><a href="/articles/views/${userArticle.contentId}">${userArticle.title}</a><br><span>${userArticle.contentId}</span></h4>
                     <ul>
                         <li class="">

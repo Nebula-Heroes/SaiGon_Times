@@ -121,7 +121,11 @@ def articles(request, article_id):
     return render(request, 'article.html', {'article_id': article_id})
 
 def most_popular(request):
+    if not request.user.is_authenticated:
+        messages.info(request, 'You must log in first.')
     return render(request, 'mostPopular.html', {})
 
 def related_articles(request, user_id):
+    if not request.user.is_authenticated:
+        messages.info(request, 'You must log in first.')
     return render(request, 'relatedArticles.html', {'user_id': user_id})

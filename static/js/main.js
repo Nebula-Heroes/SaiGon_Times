@@ -107,9 +107,9 @@ function getArticle(contentId) {
   });
 }
   function addUserInteraction(user_id, event_type, content_id, session_id, user_agent, user_region, user_country) {
+    console.log("🚀 ~ content_id:", content_id)
     const apiUrl = `${api_source}/api/interaction?user_id=${user_id}&event_type=${event_type}&content_id=${content_id}&session_id=${session_id}&user_agent=${encodeURIComponent(user_agent)}&user_region=${user_region}&user_country=${user_country}`;
   
-    console.log("🚀 ~ content_id:", content_id)
     console.log("🚀 ~ apiUrl:", apiUrl)
     return fetch(apiUrl, { method: 'GET' })
       .then(response => response.json())
