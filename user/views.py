@@ -88,21 +88,16 @@ def register(request):
         return render(request, 'register.html')
     
 def login(request):
-    nextUrl = request.POST.get('next')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         
         user = auth.authenticate(username=username, password=password)
-        # nextUrl = request.POST.get('next')
+        print(user)
         if user is not None:
             auth.login(request, user)
             messages.success(request, f"Login successfully! Welcome back, {username}.")
-            if nextUrl != '' and nextUrl is not None:
-                return redirect(nextUrl)
-            else:
-                return redirect('/')
-            # return redirect(nextUrl)
+            return redirect('/')
         else:
             messages.info(request, 'Invalid username or password.')
             return redirect('login')

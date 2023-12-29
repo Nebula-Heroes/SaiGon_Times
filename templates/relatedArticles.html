@@ -300,6 +300,13 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         var userId = "{{ user.id }}" + hashUsername("{{ user.username }}");
+        var generateSession = generateSessionId();
+
+        if (!userId || userId === 'None' || userId === '') {
+            userId = generateSessionId()
+        } else {
+            generateSession += userId;
+        }
 
         getRelatedArticles(userId)
             .then(userArticles => {
@@ -342,12 +349,12 @@ https://templatemo.com/tm-579-cyborg-gaming
                 <h4  style="max-width: 90%; min-height: 65px;"><a href="/articles/views/${userArticle.contentId}">${userArticle.title}</a><br><span>${userArticle.contentId}</span></h4>
                 <ul>
                     <li class="">
-                        <button type="button" class="custom-button" onclick="toggleButtonClick(this); addUserInteraction(userId, 'FOLLOW', '${userArticle?.contentId}', '${generateSessionId()}', 'Mozilla SPAM LINH TINH', 'US', 'USA')">
+                        <button type="button" class="custom-button" onclick="toggleButtonClick(this); addUserInteraction(userId, 'FOLLOW', '${userArticle?.contentId}', '${generateSession}', 'Mozilla SPAM LINH TINH', 'US', 'USA')">
                             <i class="fa-lg fa fa-star m-2 icon-scale"></i>
                         </button>
                     </li>
                     <li class="">
-                        <button type="button" class="custom-button" onclick="toggleButtonClick(this); addUserInteraction(userId, 'LIKE', '${userArticle?.contentId}', '${generateSessionId()}', 'Mozilla SPAM LINH TINH', 'US', 'USA')">
+                        <button type="button" class="custom-button" onclick="toggleButtonClick(this); addUserInteraction(userId, 'LIKE', '${userArticle?.contentId}', '${generateSession}', 'Mozilla SPAM LINH TINH', 'US', 'USA')">
                             <i class="fa-lg fa fa-thumbs-up m-2 icon-scale"></i>
                         </button>
                     </li>
