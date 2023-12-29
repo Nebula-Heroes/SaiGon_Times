@@ -73,10 +73,10 @@ WSGI_APPLICATION = 'news_recommendation.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dojistore',
+        'NAME': 'recsys',
         'USER': 'postgres',
-        'PASSWORD': '@Trinhdilam9.',
-        'HOST': 'localhost',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }

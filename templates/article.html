@@ -312,6 +312,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                     .then(userArticles => {
                         // Xử lý dữ liệu ở đây
                         var articlesSection = document.getElementById('like-follow-articles-section');
+                        articlesSection.innerHTML = "";
 
                         for (var i = 0; i < userArticles.length; i += 2) {
                             var userArticle1 = userArticles[i];
@@ -342,6 +343,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                     .then(userArticles => {
                         // Xử lý dữ liệu ở đây
                         var articlesSection = document.getElementById('like-follow-articles-section');
+                        articlesSection.innerHTML = "";
 
                         for (var i = 0; i < userArticles.length; i += 2) {
                             var userArticle1 = userArticles[i];

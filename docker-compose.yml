@@ -3,31 +3,23 @@ version: '3'
 services:
   web:
     build: .
-    command: bash -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 your_project_name.wsgi:application"
+    command: ["sh", "-c", "sleep 10 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
     volumes:
       - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
-    networks:
-      - mynetwork
+    environment:
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_NAME=recsys
+      - DJANGO_DB_USER=postgres
+      - DJANGO_DB_PASSWORD=postgres
 
   db:
-    image: postgres:latest
+    image: postgres
     environment:
-      POSTGRES_DB: recsys
-      POSTGRES_USER: dangtrinh
-      POSTGRES_PASSWORD: Dangtrinh
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
-    networks:
-      - mynetwork
-volumes:
-  postgres_data:
-
-networks:
-  mynetwork:
-    external: true
+      - POSTGRES_DB=recsys
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

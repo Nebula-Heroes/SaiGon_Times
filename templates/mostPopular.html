@@ -238,7 +238,7 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        var userId = "{{ user_id }}";
+        var userId = "{{ user.id }}";
 
         getRelatedArticles(userId)
             .then(userArticles => {
