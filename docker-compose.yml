@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 your_project_name.wsgi:application"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: recsys
+      POSTGRES_USER: dangtrinh
+      POSTGRES_PASSWORD: Dangtrinh
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - mynetwork
+volumes:
+  postgres_data:
+
+networks:
+  mynetwork:
+    external: true
