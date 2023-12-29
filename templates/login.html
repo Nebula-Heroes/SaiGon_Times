@@ -1,0 +1,24 @@
+<!-- login_form_fragment.html -->
+
+<form method="POST" action="{% url 'login' %}">
+  {% csrf_token %}
+  <label class="modal-label">
+      <i class="ti-user"></i>
+      Username
+  </label>
+  <input type="text" name="username" class="modal-input" placeholder="Your username" required=""
+      autocomplete="username" />
+
+  <label class="modal-label">
+      <i class="ti-pencil"></i>
+      Password
+  </label>
+  <input type="password" name="password" class="modal-input" placeholder="Your password" required=""
+      autocomplete="current-password" />
+
+  {% for message in messages %}
+  <h3 style="color: red">{{ message}}</h3>
+  {% endfor %}
+
+  <input type="submit" name="login" value="Login" class="buy-tickets" />
+</form>

@@ -857,10 +857,18 @@ Most Popular Style
 }
 
 .most-popular .item ul li:first-child i {
-  color: yellow;
+  color: #fff;
 }
 
 .most-popular .item ul li:last-child i {
+  color: #fff;
+}
+
+.most-popular .item ul li:first-child i.clicked {
+  color: yellow;
+}
+
+.most-popular .item ul li:last-child i.clicked {
   color: #ec6090;
 }
 
@@ -1030,10 +1038,18 @@ Featured Games Style
 }
 
 .featured-games .item ul li:first-child i {
-  color: yellow;
+  color: #fff;
 }
 
 .featured-games .item ul li:last-child i {
+  color: #fff;
+}
+
+.featured-games .item ul li:first-child i.clicked {
+  color: yellow;
+}
+
+.featured-games .item ul li:last-child i.clicked {
   color: #ec6090;
 }
 
@@ -1349,10 +1365,18 @@ Game Details Style
 }
 
 .game-details .content .left-info ul li:first-child i {
-  color: yellow;
+  color: #000;
 }
 
 .game-details .content .left-info ul li:last-child i {
+  color: #000;
+}
+
+.game-details .content .left-info ul li:first-child i.clicked {
+  color: yellow;
+}
+
+.game-details .content .left-info ul li:last-child i.clicked {
   color: #ec6090;
 }
 
@@ -1377,10 +1401,18 @@ Game Details Style
 }
 
 .game-details .content .right-info ul li:first-child i {
-  color: yellow;
+  color: #fff;
 } 
 
 .game-details .content .right-info ul li i {
+  color: #fff;
+}
+
+.game-details .content .right-info ul li:first-child i.clicked {
+  color: yellow;
+} 
+
+.game-details .content .right-info ul li i.clicked {
   color: #ec6090;
 }
 
@@ -1444,10 +1476,18 @@ Other Related Style
 }
 
 .other-games ul li:first-child i {
-  color: yellow;
+  color: #fff;
 }
 
 .other-games ul li:last-child i {
+  color: #fff;
+}
+
+.other-games ul li:first-child i.clicked {
+  color: yellow;
+}
+
+.other-games ul li:last-child i.clicked {
   color: #ec6090;
 }
 

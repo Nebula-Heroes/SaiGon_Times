@@ -57,31 +57,65 @@ modalContainer2.addEventListener('click', function(event) {
     event.stopPropagation()
 })
 
+function toggleButtonClick(button) {
+  button.querySelector('i').classList.toggle('clicked');
+}
+
+// Hàm để tạo session ID từ ngày giờ hiện tại
+function generateSessionId() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+
+  // Chuỗi session ID có thể được tạo từ các thành phần thời gian
+  const sessionId = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
+  return sessionId;
+}
+
+// 103.98.150.254:8818
+const api_source = 'http://api.recsysproject.tech';
 
 // Hàm fetch để lấy thông tin bài viết theo ID
 function getArticle(contentId) {
-    const apiUrl = `http://103.98.150.254:8818/api/get_article?content_id=${contentId}`;
+  const apiUrl = `${api_source}/api/get_article?content_id=${contentId}`;
   
+  console.log("🚀 ~ apiUrl:", apiUrl)
+  // Trả về một Promise
+  return new Promise((resolve, reject) => {
     fetch(apiUrl)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => {
-        console.log('Article:', data);
-        // Xử lý dữ liệu bài viết ở đây
+        console.log('Homepage articles:', data);
+        // Giải quyết Promise với dữ liệu
+        resolve(data);
       })
       .catch(error => {
-        console.error('Error fetching article:', error);
+        console.error('Error fetching homepage articles:', error);
+        // Từ chối Promise với lỗi
+        reject(error);
       });
-  }
+  });
+}
+  function addUserInteraction(user_id, event_type, content_id, session_id, user_agent, user_region, user_country) {
+    const apiUrl = `${api_source}/api/interaction?user_id=${user_id}&event_type=${event_type}&content_id=${content_id}&session_id=${session_id}&user_agent=${encodeURIComponent(user_agent)}&user_region=${user_region}&user_country=${user_country}`;
   
-  // Hàm fetch để thêm tương tác người dùng vào cơ sở dữ liệu
-  function addUserInteraction(interactionData) {
-    const apiUrl = `http://103.98.150.254:8818/api/interaction?${new URLSearchParams(interactionData)}`;
-  
-    fetch(apiUrl, { method: 'GET' })
+    console.log("🚀 ~ content_id:", content_id)
+    console.log("🚀 ~ apiUrl:", apiUrl)
+    return fetch(apiUrl, { method: 'GET' })
       .then(response => response.json())
       .then(data => {
         console.log('Interaction added:', data);
-        // Xử lý dữ liệu nếu cần
+        return data;
       })
       .catch(error => {
         console.error('Error adding user interaction:', error);
@@ -90,96 +124,122 @@ function getArticle(contentId) {
   
   // Hàm fetch để lấy danh sách bài viết trang chủ
   function getHomepageArticles(userId) {
-    const apiUrl = `http://103.98.150.254:8818/api/recommend_homepage_articles?user_id=${userId}`;
+    const apiUrl = `${api_source}/api/recommend_homepage_articles?user_id=${userId}`;
   
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Homepage articles:', data);
-        // Xử lý dữ liệu danh sách bài viết trang chủ ở đây
-      })
-      .catch(error => {
-        console.error('Error fetching homepage articles:', error);
-      });
+    console.log("🚀 ~ apiUrl:", apiUrl)
+    // Trả về một Promise
+    return new Promise((resolve, reject) => {
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Homepage articles:', data);
+          // Giải quyết Promise với dữ liệu
+          resolve(data);
+        })
+        .catch(error => {
+          console.error('Error fetching homepage articles:', error);
+          // Từ chối Promise với lỗi
+          reject(error);
+        });
+    });
   }
-  
+
   // Hàm fetch để lấy danh sách bài viết được đề xuất theo nút "Thích"
-  function getLikedArticles(contentId) {
-    const apiUrl = `http://103.98.150.254:8818/api/recommend_liked_articles?content_id=${contentId}`;
-  
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Recommended liked articles:', data);
-        // Xử lý dữ liệu danh sách bài viết được đề xuất ở đây
-      })
-      .catch(error => {
-        console.error('Error fetching recommended liked articles:', error);
-      });
-  }
-  
-  // Hàm fetch để lấy danh sách bài viết được đề xuất theo nút "Theo dõi"
-  function getFollowedArticles(authorPersonId) {
-    const apiUrl = `http://103.98.150.254:8818/api/recommend_followed_articles?author_person_id=${authorPersonId}`;
-  
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Recommended followed articles:', data);
-        // Xử lý dữ liệu danh sách bài viết được đề xuất ở đây
-      })
-      .catch(error => {
-        console.error('Error fetching recommended followed articles:', error);
-      });
-  }
+function getLikedArticles(contentId) {
+  const apiUrl = `${api_source}/api/recommend_liked_articles?content_id=${contentId}`;
+
+  console.log("🚀 ~ apiUrl:", apiUrl)
+  // Trả về một Promise
+  return new Promise((resolve, reject) => {
+      fetch(apiUrl)
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log('Recommended liked articles:', data);
+              // Giải quyết Promise với dữ liệu
+              resolve(data);
+          })
+          .catch(error => {
+              console.error('Error fetching recommended liked articles:', error);
+              // Từ chối Promise với lỗi
+              reject(error);
+          });
+  });
+}
+
+// Hàm fetch để lấy danh sách bài viết được đề xuất theo nút "Theo dõi"
+function getFollowedArticles(authorPersonId) {
+  const apiUrl = `${api_source}/api/recommend_followed_articles?author_person_id=${authorPersonId}`;
+
+  console.log("🚀 ~ apiUrl:", apiUrl)
+  // Trả về một Promise
+  return new Promise((resolve, reject) => {
+      fetch(apiUrl)
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log('Recommended followed articles:', data);
+              // Giải quyết Promise với dữ liệu
+              resolve(data);
+          })
+          .catch(error => {
+              console.error('Error fetching recommended followed articles:', error);
+              // Từ chối Promise với lỗi
+              reject(error);
+          });
+  });
+}
   
   // Hàm fetch để lấy danh sách bài viết được đề xuất (bài viết liên quan)
   function getRelatedArticles(userId) {
-    const apiUrl = `http://103.98.150.254:8818/api/recommend_related_articles?user_id=${userId}`;
-  
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Recommended related articles:', data);
-        // Xử lý dữ liệu danh sách bài viết được đề xuất ở đây
-      })
-      .catch(error => {
-        console.error('Error fetching recommended related articles:', error);
-      });
-  }
-  
-// Sử dụng các hàm trên với các tham số thích hợp
-// getArticle('2480569770059008227');
-// addUserInteraction({
-// user_id: '29888888888',
-// event_type: 'VIEW',
-// content_id: '4109618890343020064',
-// session_id: '7899999999999',
-// user_agent: 'Mozilla SPAM LINH TINH',
-// user_region: 'US',
-// user_country: 'USA'
-// });
-// getHomepageArticles('-9150583489352258206');
-// getLikedArticles('2480569770059008227');
-// getFollowedArticles('-2979881261169775358');
-// getRelatedArticles('-9150583489352258206');
+    const apiUrl = `${api_source}/api/recommend_related_articles?user_id=${userId}`;
 
-// Function to fetch article data by content_id
-// function getArticleById(contentId) {
-//     const apiUrl = `http://api.recsysproject.tech/api/get_article?content_id=${contentId}`;
+    // Trả về một Promise
+    return new Promise((resolve, reject) => {
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Recommended related articles:', data);
+                // Giải quyết Promise với dữ liệu
+                resolve(data);
+            })
+            .catch(error => {
+                console.error('Error fetching recommended related articles:', error);
+                // Từ chối Promise với lỗi
+                reject(error);
+            });
+    });
+}
+
+  // function getRelatedArticles(userId) {
+  //   const apiUrl = `${api_source}/api/recommend_related_articles?user_id=${userId}`;
   
-//     fetch(apiUrl)
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log('Article data:', data);
-//         // Handle the article data here
-//       })
-//       .catch(error => {
-//         console.error('Error fetching article data:', error);
-//       });
-//   }
-  
-  // Usage with the provided content_id
-//   const contentId = '2480569770059008227';
-//   getArticleById(contentId);
+  //   fetch(apiUrl)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log('Recommended related articles:', data);
+  //       return data;
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching recommended related articles:', error);
+  //     });
+  // }
   

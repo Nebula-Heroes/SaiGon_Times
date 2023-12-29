@@ -299,14 +299,10 @@ https://templatemo.com/tm-579-cyborg-gaming
     <script src="{% static 'js/main.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        
-        var userId = "{{ user.id }}";
+        var userId = "{{ user_id }}";
         console.log("🚀 ~ user:", userId);
-        if (userId != 'undefined') {
-            userId = generateSessionId()
-        }
 
-        getHomepageArticles(userId)
+        getRelatedArticles(userId)
             .then(userArticles => {
                 // Xử lý dữ liệu ở đây
                 console.log('Data received:', userArticles);

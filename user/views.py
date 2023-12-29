@@ -3,6 +3,16 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.http import HttpResponse
 import requests
+from django.urls import path
+from django.http import Http404
+
+def dynamic_router(request, slug):
+    # Kiểm tra nếu có thể chuyển hướng đến view login
+    if slug == 'login':
+        return login(request)
+    # Nếu không, thì xử lý theo logic của view articles
+    else:
+        return articles(request, slug)
 
 # Create your views here.
 def index(request):
@@ -48,6 +58,58 @@ def index(request):
     else:
         return render(request, 'index.html', {})
 
+def register(request):
+    nextUrl = request.POST.get('next')
+    if request.method == 'POST':
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        if password == password2:
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'Email already exists')
+                return redirect('register')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request, 'Username already exists')
+                return redirect('register')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
+                user = auth.authenticate(username=username, password=password)
+                auth.login(request, user)
+                if nextUrl != '' and nextUrl is not None:
+                    return redirect(nextUrl)
+                else:
+                    return redirect('/')
+        else:
+            messages.info(request, 'Password doesn\'t match')
+            return redirect('register')
+    else:
+        return render(request, 'register.html')
+    
+def login(request):
+    nextUrl = request.POST.get('next')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = auth.authenticate(username=username, password=password)
+        # nextUrl = request.POST.get('next')
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, f"Login successfully! Welcome back, {username}.")
+            if nextUrl != '' and nextUrl is not None:
+                return redirect(nextUrl)
+            else:
+                return redirect('/')
+            # return redirect(nextUrl)
+        else:
+            messages.info(request, 'Invalid username or password.')
+            return redirect('login')
+        
+    else: 
+        return render(request, 'login.html')
+    
 def logout(request):
     auth.logout(request)
     return redirect('/')
@@ -55,22 +117,11 @@ def logout(request):
 # def articles(request, slug):
 #     return render(request, 'article.html', {'slug': slug})
 
-def articles(request, slug):
-    # Replace 'your_api_key' with the actual API key if required
-    api_url = f'http://api.recsysproject.tech/api/get_article?content_id={slug}&api_key=your_api_key'
+def articles(request, article_id):
+    return render(request, 'article.html', {'article_id': article_id})
 
-    try:
-        # Make the API request
-        response = requests.get(api_url)
-        response.raise_for_status()  # Raise an exception for bad responses (4xx and 5xx)
+def most_popular(request):
+    return render(request, 'mostPopular.html', {})
 
-        # Parse the JSON data from the response
-        article_data = response.json()
-
-        # Pass the article data to the template
-        return render(request, 'article.html', {'article_data': article_data})
-
-    except requests.exceptions.RequestException as e:
-        # Handle request exceptions (e.g., connection error, timeout, etc.)
-        error_message = f"Error fetching article data: {e}"
-        return render(request, 'error.html', {'error_message': error_message})
+def related_articles(request, user_id):
+    return render(request, 'relatedArticles.html', {'user_id': user_id})

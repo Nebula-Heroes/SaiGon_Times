@@ -1,0 +1,36 @@
+<form method="POST" action="{% url 'register' %}">
+  {% csrf_token %}
+  <label for="ticket-quantity" class="modal-label">
+      <i class="ti-email"></i>
+      Email
+  </label>
+  <input type="email" name="email" class="modal-input" placeholder="Your email" required=""
+      autocomplete="username" />
+
+  <label class="modal-label">
+      <i class="ti-user"></i>
+      Username
+  </label>
+  <input type="text" name="username" class="modal-input" placeholder="Your username" required=""
+      autocomplete="username" />
+
+  <label class="modal-label">
+      <i class="ti-pencil"></i>
+      Password
+  </label>
+  <input type="password" name="password" class="modal-input" placeholder="Your password" required=""
+      autocomplete="current-password" />
+
+  <label class="modal-label">
+      <i class="ti-pencil"></i>
+      Confirm Password
+  </label>
+  <input type="password" name="password2" class="modal-input" placeholder="Confirm your password"
+      required="" autocomplete="current-password" />
+
+  {% for message in messages %}
+  <h3 style="color: red">{{ message}}</h3>
+  {% endfor %}
+
+  <input type="submit" name="register" value="Register" class="buy-tickets" />
+</form>

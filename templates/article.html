@@ -26,39 +26,13 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
     <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static '/css/home.css' %}" />
-    <link
-      rel="stylesheet"
-      href="{% static '/font/themify-icons-font/themify-icons.css' %}"
-    />
+    <link rel="stylesheet" href="{% static '/font/themify-icons-font/themify-icons.css' %}" />
     <link rel="stylesheet" href="{% static 'font/fontawesome/css/all.css' %}" />
     <!-- TemplateMo 579 Cyborg Gaming
 
 https://templatemo.com/tm-579-cyborg-gaming
 
 -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        // Function to fetch article data by ID using async/await
-        async function getArticleById(contentId) {
-            try {
-                const response = await fetch(`http://api.recsysproject.tech/api/get_article?content_id=${contentId}`);
-                const data = await response.json();
-
-                // Update the content of the HTML elements with the received data
-                $('#article-title').text(data.title);
-                $('#article-content').html(data.text);
-                $('#article-author').html('#'+ data.authorPersonId);
-
-            } catch (error) {
-                console.error('Error fetching article data:', error);
-            }
-        }
-
-        // Fetch article data when the page loads
-        $(document).ready(async function () {
-            await getArticleById('2480569770059008227');
-        });
-    </script>
 </head>
 
 <body>
@@ -124,28 +98,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
             <div class="modal-body">
                 <!-- For: only use with id -->
-                <form method="POST">
-                    {% csrf_token %}
-                    <label class="modal-label">
-                        <i class="ti-user"></i>
-                        Username
-                    </label>
-                    <input type="text" name="username" class="modal-input" placeholder="Your username" required=""
-                        autocomplete="username" />
-
-                    <label class="modal-label">
-                        <i class="ti-shopping-cart"></i>
-                        Password
-                    </label>
-                    <input type="password" name="password" class="modal-input" placeholder="Your password" required=""
-                        autocomplete="current-password" />
-
-                    {% for message in messages %}
-                    <h3 style="color: red">{{ message}}</h3>
-                    {% endfor %}
-
-                    <input type="submit" name="login" value="Login" class="buy-tickets" />
-                </form>
+                {% include 'login.html' %}
             </div>
         </div>
     </div>
@@ -160,46 +113,10 @@ https://templatemo.com/tm-579-cyborg-gaming
 
             <div class="modal-body">
                 <!-- For: only use with id -->
-                <form method="POST">
-                    {% csrf_token %}
-                    <label for="ticket-quantity" class="modal-label">
-                        <i class="ti-email"></i>
-                        Email
-                    </label>
-                    <input type="email" name="email" class="modal-input" placeholder="Your email" required=""
-                        autocomplete="username" />
-
-                    <label class="modal-label">
-                        <i class="ti-user"></i>
-                        Username
-                    </label>
-                    <input type="text" name="username" class="modal-input" placeholder="Your username" required=""
-                        autocomplete="username" />
-
-                    <label class="modal-label">
-                        <i class="ti-shopping-cart"></i>
-                        Password
-                    </label>
-                    <input type="password" name="password" class="modal-input" placeholder="Your password" required=""
-                        autocomplete="current-password" />
-
-                    <label class="modal-label">
-                        <i class="ti-shopping-cart"></i>
-                        Confirm Password
-                    </label>
-                    <input type="password" name="password2" class="modal-input" placeholder="Confirm your password"
-                        required="" autocomplete="current-password" />
-
-                    {% for message in messages %}
-                    <h3 style="color: red">{{ message}}</h3>
-                    {% endfor %}
-
-                    <input type="submit" name="register" value="Register" class="buy-tickets" />
-                </form>
+                {% include 'register.html' %}
             </div>
         </div>
     </div>
-
     <!-- Modal End -->
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
@@ -239,7 +156,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                             <li><a class="active" href="/">Home</a></li>
                             {% if user.is_authenticated %}
                             <li>
-                                <a class="dropdown-item" href="logout">Logout</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                             </li>
                             {% else %}
                             <li><a class="nav-item nav-link btn-login">Login</a></li>
@@ -288,11 +205,22 @@ https://templatemo.com/tm-579-cyborg-gaming
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12">
                                         <div class="item">
-                                            <!-- <img src="{% static '/images/popular-01.jpg' %}" alt=""> -->
+                                            <img id="article-image" src="{% static '/images/popular-01.jpg' %}" alt="">
                                             <h4>Author<br><span id="article-author"></span></h4>
                                             <ul>
-                                                <li><i class="fa fa-star"></i> 4.8</li>
-                                                <li><i class="fa fa-download"></i> 2.3M</li>
+                                                <!-- Button với icon màu trắng -->
+                                                <li class="">
+                                                    <button type="button" class="custom-button"
+                                                        onclick="toggleButtonClick(this); addUserInteraction(userId, 'FOLLOW', parseInt('{{ article_id }}'), generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA'); get_like_follow_articles('follow')">
+                                                        <i class="fa-lg fa fa-star m-3 icon-scale"></i>
+                                                    </button>
+                                                </li>
+                                                <li class="">
+                                                    <button type="button" class="custom-button"
+                                                        onclick="toggleButtonClick(this); addUserInteraction(userId, 'LIKE', parseInt('{{ article_id }}'), generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA'); get_like_follow_articles('like')">
+                                                        <i class="fa-lg fa fa-thumbs-up m-3 icon-scale"></i>
+                                                    </button>
+                                                </li>                                                
                                             </ul>
                                         </div>
                                     </div>
@@ -302,9 +230,17 @@ https://templatemo.com/tm-579-cyborg-gaming
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="main-button">
-                                            <a href="#">Discover Popular</a>
+                                            <a href="/related_articles/{{ user.id }}">See related articles</a>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div id="like-follow-articles-section" class="col-12"></div>
+                                    <!-- <div class="col-lg-12">
+                                        <div class="main-button">
+                                            <a href="/articles/most_popular">Discover Popular</a>
+                                        </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -321,8 +257,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                 <div class="col-lg-12">
                     <p>Copyright © 2024 <a href="#">Dang Trinh Do</a> Company. All rights reserved.
 
-                        <br>Design: <a href="https://github.com/dangtrinhhh" target="_blank"
-                            title="ddt">DangTrinhDo</a>
+                        <br>Design: <a href="https://github.com/dangtrinhhh" target="_blank" title="ddt">DangTrinhDo</a>
                     </p>
                 </div>
             </div>
@@ -332,11 +267,135 @@ https://templatemo.com/tm-579-cyborg-gaming
 
     <!-- Scripts -->
     <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'js/main.js' %}">
-        var article_data = getArticleById('2480569770059008227');
-    </script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static '/jquery/jquery.min.js' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        var userId = "{{ user.id }}";
+        const contentId = "{{ article_id }}".toString();
+        const author_person_id = '';
+        console.log("🚀 ~ author_person_id:", author_person_id)
+        console.log("🚀 ~ contentId:", contentId);
+
+        getArticle(contentId)
+            .then(data => {
+                console.log('Data received:', data);
+
+                // Cập nhật hình ảnh
+                document.getElementById('article-image').src = data.thumbnails ? data.thumbnails : "{% static '/images/test.png' %}";
+
+                // Cập nhật tên tác giả
+                document.getElementById('article-author').innerText = 'Author: ' + data.author;
+
+                // Cập nhật tiêu đề bài viết
+                document.getElementById('article-title').innerText = data.title;
+
+                // Cập nhật nội dung bài viết
+                document.getElementById('article-content').innerHTML = data.text;
+
+                // Cập nhật ID tác giả
+                document.getElementById('article-author').innerHTML = 'Author<br><span>' + data.authorPersonId + '</span>';
+                author_person_id = data.authorPersonId;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        function get_like_follow_articles(mode) {
+            if (mode == 'like') {
+                getLikedArticles(contentId)
+                    .then(userArticles => {
+                        // Xử lý dữ liệu ở đây
+                        console.log('Data received:', userArticles);
+                        var articlesSection = document.getElementById('like-follow-articles-section');
+
+                        for (var i = 0; i < userArticles.length; i += 2) {
+                            var userArticle1 = userArticles[i];
+                            var userArticle2 = userArticles[i + 1];
+
+                            var rowDiv = document.createElement('div');
+                            rowDiv.className = 'row';
+
+                            // Item 1
+                            var articleDiv1 = createArticleDiv(userArticle1);
+                            rowDiv.appendChild(articleDiv1);
+
+                            // Item 2 (Kiểm tra xem có item thứ 2 không trước khi thêm)
+                            if (userArticle2) {
+                                var articleDiv2 = createArticleDiv(userArticle2);
+                                rowDiv.appendChild(articleDiv2);
+                            }
+
+                            articlesSection.appendChild(rowDiv);
+                        }
+                    })
+                    .catch(error => {
+                        // Xử lý lỗi ở đây
+                        console.error('Error:', error);
+                    });
+            } else {
+                getFollowedArticles(author_person_id)
+                    .then(userArticles => {
+                        // Xử lý dữ liệu ở đây
+                        console.log('Data received:', userArticles);
+                        var articlesSection = document.getElementById('like-follow-articles-section');
+
+                        for (var i = 0; i < userArticles.length; i += 2) {
+                            var userArticle1 = userArticles[i];
+                            var userArticle2 = userArticles[i + 1];
+
+                            var rowDiv = document.createElement('div');
+                            rowDiv.className = 'row';
+
+                            // Item 1
+                            var articleDiv1 = createArticleDiv(userArticle1);
+                            rowDiv.appendChild(articleDiv1);
+
+                            // Item 2 (Kiểm tra xem có item thứ 2 không trước khi thêm)
+                            if (userArticle2) {
+                                var articleDiv2 = createArticleDiv(userArticle2);
+                                rowDiv.appendChild(articleDiv2);
+                            }
+
+                            articlesSection.appendChild(rowDiv);
+                        }
+                    })
+                    .catch(error => {
+                        // Xử lý lỗi ở đây
+                        console.error('Error:', error);
+                    });
+            }
+        }
+
+        function createArticleDiv(userArticle) {
+            var articleDiv = document.createElement('div');
+            articleDiv.className = 'col-lg-6 col-sm-12';
+
+            articleDiv.innerHTML = `
+                <div class="item px-2">
+                    <img src="{% static '/images/test.png' %}" alt="">
+                    <h4 style="max-width: 90%;"><a href="/articles/views/${userArticle.contentId}">${userArticle.title}</a><br><span>${userArticle.contentId}</span></h4>
+                    <ul>
+                        <li class="">
+                            <button type="button" class="custom-button" onclick="toggleButtonClick(this); addUserInteraction(userId, 'FOLLOW', '${userArticle?.contentId}', '${generateSessionId()}', 'Mozilla SPAM LINH TINH', 'US', 'USA')">
+                                <i class="fa-lg fa fa-star m-2 icon-scale"></i>
+                            </button>
+                        </li>
+                        <li class="">
+                            <button type="button" class="custom-button" onclick="toggleButtonClick(this); addUserInteraction(userId, 'LIKE', '${userArticle?.contentId}', '${generateSessionId()}', 'Mozilla SPAM LINH TINH', 'US', 'USA')">
+                                <i class="fa-lg fa fa-thumbs-up m-2 icon-scale"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            `;
+
+            return articleDiv;
+        }
+
+    </script>
 
     <script src="{% static '/js/isotope.min.js' %}"></script>
     <script src="{% static '/js/owl-carousel.js' %}"></script>

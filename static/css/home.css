@@ -207,6 +207,33 @@
     background-color: #71a372;
 }
 
+.custom-button {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff !important;
+}
+
+.icon-scale {
+    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.icon-scale:hover {
+    color: yellow; /* Màu của icon khi hover */
+    transform: scale(1.1); /* Hiệu ứng scale khi hover */
+}
+
+.icon-scale.clicked {
+    color: pink; /* Màu của icon khi click */
+    transform: scale(1.1); /* Hiệu ứng scale khi click */
+}
+
+/* .item-title, .item-title span {
+    max-width: 90%;
+    overflow: hidden;
+} */
+
 .gradient-custom {
 /* fallback for old browsers */
 background: #f6d365;
