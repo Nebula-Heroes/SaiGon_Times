@@ -73,7 +73,7 @@ function generateSessionId() {
   const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
 
   // Chuỗi session ID có thể được tạo từ các thành phần thời gian
-  const sessionId = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
+  const sessionId = `${year}${month}${day}${hours}`;
   return sessionId;
 }
 

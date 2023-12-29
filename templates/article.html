@@ -280,8 +280,7 @@ https://templatemo.com/tm-579-cyborg-gaming
 
         var contentId = "{{ article_id }}".toString();
         var author_person_id = '';
-
-        addUserInteraction(userId, 'VIEW', parseInt('{{ article_id }}'), generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA');
+        addUserInteraction(userId, 'VIEW', contentId, generateSessionId(), 'Mozilla SPAM LINH TINH', 'US', 'USA');
 
         getArticle(contentId)
             .then(data => {
