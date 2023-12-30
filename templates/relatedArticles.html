@@ -247,7 +247,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                                     <h6>Welcome To Saigon Times</h6>
                                     <h4><em>Browse</em> Our Latest News Here</h4>
                                     <div class="main-button">
-                                        <a href="browse.html">Browse Now</a>
+                                        <a href="/">Browse Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +266,7 @@ https://templatemo.com/tm-579-cyborg-gaming
                                     <div id="articles-section" class="col-12"></div>
                                     <div class="col-lg-12">
                                         <div class="main-button">
-                                            <a href="/articles/most_popular">Discover Popular</a>
+                                            <a href="/articles/most_popular/{{ user.id }}">Discover Popular</a>
                                         </div>
                                     </div>
                                 </div>
@@ -302,7 +302,7 @@ https://templatemo.com/tm-579-cyborg-gaming
         var userId = "{{ user.id }}" + hashUsername("{{ user.username }}");
         var generateSession = generateSessionId();
 
-        if (!userId || userId === 'None' || userId === '') {
+        if (!userId || userId === 'None' || userId === 'NoneNaN' || userId === '') {
             userId = generateSessionId()
         } else {
             generateSession += userId;

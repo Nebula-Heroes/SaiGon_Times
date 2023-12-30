@@ -78,8 +78,11 @@ function generateSessionId() {
 }
 
 function hashUsername(username) {
-  const hashedUsername = md5(username);
-  return hashedUsername;
+  console.log("🚀 ~ username:", username)
+  const truncatedUsername = username.slice(0, 10);
+  console.log("🚀 ~ truncatedUsername:", parseInt(truncatedUsername))
+  const hashedUsername = md5(truncatedUsername);
+  return parseInt(hashedUsername);
 }
 
 function md5(input) {
